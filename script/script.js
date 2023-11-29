@@ -22,7 +22,7 @@ function registDate(){
   var hour = now.getHours();
   var min = now.getMinutes();
   var sec = now.getSeconds();
-  return day+'/'+month+1+'/'+year+' '+hour+':'+min+':'+sec;
+  return day+'/'+(Number(month)+1)+'/'+year+' '+hour+':'+min+':'+sec;
 
 }
 
