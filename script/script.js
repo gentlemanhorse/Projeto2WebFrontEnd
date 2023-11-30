@@ -1,5 +1,5 @@
 var personList = [];
-var index;
+var index = 0;
 
 document.getElementById('formulario').addEventListener('submit', function (event) {
   event.preventDefault();
@@ -9,8 +9,9 @@ document.getElementById('formulario').addEventListener('submit', function (event
   var contentInput = document.getElementById("content");
   var feedback = document.getElementById("feedback");
   var date = registDate();
-  addPerson(nameInput.value, parseInt(ageInput.value), mailInput.value, contentInput.value, feedback.value, date);
+  var id = index;
   index++;
+  addPerson(id, nameInput.value, parseInt(ageInput.value), mailInput.value, contentInput.value, feedback.value, date);
   cleanForm();
 });
 
@@ -47,18 +48,31 @@ function renderPersonList() {
 
   personList.forEach(function (person) {
     var listItem = document.createElement('li');
-    listItem.innerHTML = '<span class="element">Nome: ' + person.name +'</span> Idade: ' + person.age + ' Data de Insrição:' + person.date+ '<button onclick="deletePerson(' + person.id + ')" class="bt">Excluir</button>';
+    listItem.innerHTML = '<span class="element">Nome: ' + person.name +'</span> Idade: ' + person.age + ' Data de Insrição:' + person.date+ '<button onclick="infPerson(' + person.id + ')" class="bt">Ver Dados</button><button onclick="deletePerson(' + person.id + ')" class="bt">Excluir</button>';
     personListElement.appendChild(listItem);
   });
 }
 
-function addPerson(name, age, mail, content, feedback, date) {
-  var newPerson = {id: index, name: name, age: age, mail: mail, content:content, feedback:feedback, date:date};
+function addPerson(id, name, age, mail, content, feedback, date) {
+  var newPerson = {id: id, name: name, age: age, mail: mail, content:content, feedback:feedback, date:date};
   personList.push(newPerson);   
   localStorage.setItem('personList', JSON.stringify(personList));
   renderPersonList();
+  alert('Pessoa registrada com sucesso!');
 }
 
+function infPerson(id){
+  var result = personList.filter(function(person) {
+    return person.id === id;
+  });
+  result.forEach(function (person){
+    alert('Dados do colaborador\nNome: '+person.name+'\nIdade: '+person.age+'\nE-mail: '+person.mail+'\nPretenção de apoiar finaceiramente: '+person.content+'\nFeedback: '+person.feedback);
+  });
+    
+  
+  
+
+}
 function deletePerson(id) {
   var updatedPersonList = personList.filter(function(person) {
     return person.id !== id;
