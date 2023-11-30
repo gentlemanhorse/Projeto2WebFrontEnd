@@ -91,7 +91,7 @@ function deletePerson(id) {
 function query(){
   var tag = document.getElementById('personField');
   personList = personList.filter(function(person) {
-    return person.name === tag.value;
+      return person.name.includes(tag.value);
   });
   if(personList.length !== 0){
     renderPersonList();
